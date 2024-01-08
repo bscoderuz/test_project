@@ -7,11 +7,10 @@ logger = logging.getLogger(__name__)
 
 class TestAPIView(APIView):
     def get(self, request):
-        ip = request.META.get('HTTP_X_FORWARDED_FOR')
-        if ip is None:
-            ip = request.META.get('REMOTE_ADDR')
-
         try:
+            ip = request.META.get('HTTP_X_FORWARDED_FOR')
+            if ip is None:
+                ip = request.META.get('REMOTE_ADDR')
             logger.info('GET request received')
             return Response(f"User IP: {ip}")
         except Exception as e:
